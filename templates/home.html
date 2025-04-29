@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ホーム画面</title>
+</head>
+<body>
+    <h1>ホームへようこそ！</h1>
+    <p>{{ user.username }} さん、こんにちは！</p>
+
+    <ul>
+        <li><a href="{% url 'match_list' %}">勝敗一覧を見る</a></li>
+        <li><a href="{% url 'match_create' %}">新しい勝敗を登録する</a></li>
+        <li><a href="{% url 'logout' %}">ログアウト</a></li>
+    </ul>
+
+</body>
+</html>

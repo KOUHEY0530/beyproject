@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>勝敗登録</title>
+</head>
+<body>
+    <h1>勝敗登録</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">登録する</button>
+    </form>
+
+    <p><a href="{% url 'home' %}">ホームに戻る</a></p>
+</body>
+</html>
