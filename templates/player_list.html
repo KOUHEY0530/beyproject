@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>プレイヤー一覧</title>
+</head>
+<body>
+    <h1>プレイヤー一覧</h1>
+
+    <ul>
+        {% for player in players %}
+            <li>
+                <strong>{{ player.name }}</strong><br>
+                {% for bey in player.beyblades.all %}
+                    ・{{ bey.name }}
+                    {% if bey.image %}
+                        <br><img src="{{ bey.image.url }}" width="100">
+                    {% endif %}
+                {% empty %}
+                    <br>※ベイブレード未登録
+                {% endfor %}
+                <br>
+                <a href="{% url 'player_beyblade_update' player.id %}">編集</a> |
+                <a href="{% url 'player_beyblade_delete' player.id %}">削除</a>
+            </li>
+        {% empty %}
+            <li>プレイヤーはまだ登録されていません</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'player_beyblade_create' %}">プレイヤー・ベイブレードを新規登録する</a></p>
+    <p><a href="{% url 'home' %}">ホームに戻る</a></p>
+</body>
+</html>

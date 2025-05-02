@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>プレイヤー削除確認</title>
+</head>
+<body>
+    <h1>プレイヤー削除確認</h1>
+    <p>「{{ player.name }}」を本当に削除しますか？</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">削除する</button>
+        <a href="{% url 'player_list' %}">キャンセル</a>
+    </form>
+</body>
+</html>
