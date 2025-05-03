@@ -38,7 +38,10 @@ class MatchForm(forms.ModelForm):
     player1 = forms.ModelChoiceField(queryset=Player.objects.all(), label='プレイヤー1')
     player2 = forms.ModelChoiceField(queryset=Player.objects.all(), label='プレイヤー2')
     winner  = forms.ModelChoiceField(queryset=Player.objects.all(), label='勝者')
-    date = forms.DateField(widget=forms.SelectDateWidget, label='日付')
+    date = forms.DateField(
+        widget=forms.TextInput(attrs={'id': 'datepicker'}),
+        label='日付'
+    )
 
 class PlayerBeybladeForm(forms.Form):
     player_name = forms.CharField(label='プレイヤー名', max_length=100)
