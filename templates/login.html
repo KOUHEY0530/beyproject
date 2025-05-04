@@ -1,19 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <title>ログイン</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
 </head>
 <body>
-    <h1>ログイン</h1>
+    <div class="container">
+        <h1>ログイン</h1>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
 
-        <button type="submit">ログインする</button>
-    </form>
+            <button type="submit">ログインする</button>
+        </form>
 
-    <p><a href="{% url 'register' %}">アカウントを作成する</a></p>
+        <p><a href="{% url 'register' %}" class="button">アカウントを作成する</a></p>
+    </div>
 </body>
 </html>

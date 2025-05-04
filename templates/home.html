@@ -1,25 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <title>ホーム画面</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
 </head>
 <body>
-    <h1>ホームへようこそ！</h1>
-    <p>{{ user.username }} さん、こんにちは！</p>
+    <div class="container">
+        <h1>ホーム画面</h1>
+        <p>{{ user.username }} さん、こんにちは！</p>
 
-    <ul>
-        <li><a href="{% url 'player_beyblade_create' %}">プレイヤー・ベイブレードを登録する</a></li>
-        <li><a href="{% url 'player_list' %}">プレイヤー・ベイブレード一覧を見る</a></li>
-        <li><a href="{% url 'match_list' %}">勝敗一覧を見る</a></li>
-        <li><a href="{% url 'match_create' %}">勝敗を登録する</a></li>
-            
-    </ul>
+        <ul>
+            <li><a href="{% url 'player_beyblade_create' %}" class="button">プレイヤー・ベイブレードを登録</a></li>
+            <li><a href="{% url 'player_list' %}" class="button">プレイヤー・ベイブレード一覧</a></li>
+            <li><a href="{% url 'match_create' %}" class="button">勝敗を登録</a></li>
+            <li><a href="{% url 'match_list' %}" class="button">勝敗一覧</a></li>
+            <li><a href="{% url 'player_stats' %}" class="button">プレイヤー勝率一覧</a></li>   
+        </ul>
 
-    <form action="{% url 'logout' %}" method="post" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit">ログアウト</button>
-    </form>
-
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">ログアウト</button>
+        </form>
+        <img src="{% static 'images/beyblade.png' %}" alt="ベイブレード画像" class="form-corner-image">
+    </div>
 </body>
 </html>

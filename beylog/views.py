@@ -6,6 +6,7 @@ from .forms import MatchForm
 from .forms import PlayerBeybladeForm, Beyblade, Player
 from django.shortcuts import get_object_or_404
 from .forms import BeybladeFormSet
+from django.db.models import Count, Q
 
 @login_required
 def home(request):
@@ -26,7 +27,8 @@ def player_create(request):
     if request.method == 'POST':
         form = PlayerForm(request.POST)
         if form.is_valid():
-            form.save()
+            player = form.save(commit=False)
+            player.user = request.user
             return redirect('player_list')
     else:
         form = PlayerForm()
@@ -49,7 +51,7 @@ def match_list(request):
     return render(request, 'match_list.html', {'matches': matches})
 
 def player_list(request): #プレイヤー一覧表示
-    players = Player.objects.prefetch_related('beyblades').all()
+    players = Player.objects.filter(user=request.user)
     return render(request, 'player_list.html', {'players': players})
 
 @login_required
@@ -66,22 +68,50 @@ def match_create(request):
     return render(request, 'match_form.html', {'form': form})
 
 @login_required
+def match_update(request, pk):
+    match = get_object_or_404(Match, pk=pk)
+    if request.method == 'POST':
+        form = MatchForm(request.POST, instance=match)
+        if form.is_valid():
+            form.save()
+            return redirect('match_list')
+    else:
+        form = MatchForm(instance=match)
+    return render(request, 'match_form.html', {'form': form})
+
+@login_required
+def match_delete(request, pk):
+    match = get_object_or_404(Match, pk=pk)
+    if request.method == 'POST':
+        match.delete()
+        return redirect('match_list')
+    return render(request, 'match_confirm_delete.html', {'match': match})
+
+@login_required
 # 追加
 def player_beyblade_create(request):
     if request.method == 'POST':
-        form = PlayerBeybladeForm(request.POST, request.FILES)
-        if form.is_valid():
-            # プレイヤーを作成
-            player = Player.objects.create(name=form.cleaned_data['player_name'])
-            # ベイブレードを作成 (プレイヤーに紐づけ)
-            Beyblade.objects.create(
-                player=player,
-                name=form.cleaned_data['beyblade_name'],
-            )
-            return redirect('player_list')  # プレイヤー一覧に戻る
+        player_form = PlayerForm(request.POST)
+
+        if player_form.is_valid():
+            player = player_form.save(commit=False)
+            player.user = request.user
+            player.save()
+
+            formset = BeybladeFormSet(request.POST, instance=player)  # ←ここ重要
+            if formset.is_valid():
+                formset.save()
+                return redirect('player_list')
+        else:
+            formset = BeybladeFormSet(request.POST)  # プレイヤー保存失敗時
     else:
-        form = PlayerBeybladeForm()
-    return render(request, 'player_beyblade_form.html', {'form': form})
+        player_form = PlayerForm()
+        formset = BeybladeFormSet()
+
+    return render(request, 'player_beyblade_form.html', {
+        'player_form': player_form,
+        'formset': formset,
+    })
 
 @login_required
 # 編集
@@ -151,3 +181,21 @@ def player_beyblade_delete(request, player_id):
         return redirect('player_list')
 
     return render(request, 'player_beyblade_confirm_delete.html', {'player': player})
+
+@login_required
+def player_stats(request):
+    players = Player.objects.all()
+
+    stats = []
+    for player in players:
+        total_matches = Match.objects.filter(Q(player1=player) | Q(player2=player)).count()
+        wins = Match.objects.filter(winner=player).count()
+        win_rate = (wins / total_matches * 100) if total_matches > 0 else 0
+        stats.append({
+            'player': player,
+            'total_matches': total_matches,
+            'wins': wins,
+            'win_rate': round(win_rate, 2),
+        })
+
+    return render(request, 'player_stats.html', {'stats': stats})

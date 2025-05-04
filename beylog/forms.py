@@ -15,20 +15,28 @@ class PlayerForm(forms.ModelForm):
     class Meta:
         model = Player
         fields = ['name']
-
-    # BeybladeFormSet を作成 (Playerに紐づくBeyblade用)
-BeybladeFormSet = inlineformset_factory(
-    Player,           # 親モデル
-    Beyblade,         # 子モデル
-    fields=['name'],  # 登録するフィールド
-    extra=1,          # 新規追加フォームをいくつ表示するか
-    can_delete=True   # 削除機能をフォームに含める
-)
+        labels = {
+            'name': 'プレイヤー名',
+        }
 
 class BeybladeForm(forms.ModelForm):
     class Meta:
         model = Beyblade
         fields = ['name', 'type']
+        labels = {
+            'name': 'ベイブレード名',
+        }
+
+    # BeybladeFormSet を作成 (Playerに紐づくBeyblade用)
+BeybladeFormSet = inlineformset_factory(
+    Player,           # 親モデル
+    Beyblade,         # 子モデル
+    form=BeybladeForm, 
+    fields=['name'],
+    extra=1,          # 新規追加フォームをいくつ表示するか
+    labels={'name': 'ベイブレード名'},
+    can_delete=False
+)
 
 class MatchForm(forms.ModelForm):
     class Meta:

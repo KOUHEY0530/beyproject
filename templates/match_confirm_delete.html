@@ -3,18 +3,20 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>プレイヤー削除確認</title>
+    <title>勝敗削除確認</title>
     <link rel="stylesheet" href="{% static 'style/style.css' %}">
 </head>
 <body>
     <div class="container">
-        <h1>プレイヤー削除確認</h1>
-        <p>「{{ player.name }}」を本当に削除しますか？</p>
+        <h1>勝敗削除確認</h1>
+        <p>この勝敗データを本当に削除しますか？</p>
+
+        <p>{{ match.player1.name }} vs {{ match.player2.name }} — 勝者: {{ match.winner.name }} ({{ match.date }})</p>
 
         <form method="post">
             {% csrf_token %}
             <button type="submit">削除する</button>
-            <a href="{% url 'player_list' %}" class="button">キャンセル</a>
+            <a href="{% url 'match_list' %}" class="button">キャンセル</a>
         </form>
     </div>
 </body>

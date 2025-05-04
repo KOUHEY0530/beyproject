@@ -1,20 +1,43 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <title>勝敗一覧</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
 </head>
 <body>
-    <h1>勝敗一覧</h1>
-    <ul>
-    {% for match in matches %}
-        <li>{{ match.player1 }} vs {{ match.player2 }} - 勝者: {{ match.winner }} ({{ match.date }})</li>
-    {% empty %}
-        <li>まだ勝敗記録がありません。</li>
-    {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>勝敗一覧</h1>
 
-    <a href="{% url 'match_create' %}">新しい勝敗を登録する</a><br>
-    <a href="{% url 'home' %}">ホームへ戻る</a>
+        <table border="1">
+            <tr>
+                <th>プレイヤー1</th>
+                <th>プレイヤー2</th>
+                <th>勝者</th>
+                <th>日付</th>
+                <th>操作</th>
+            </tr>
+
+            {% if matches.exists %}
+                {% for match in matches %}
+                    <tr>
+                        <td>{{ match.player1.name }}</td>
+                        <td>{{ match.player2.name }}</td>
+                        <td>{{ match.winner.name }}</td>
+                        <td>{{ match.date }}</td>
+                        <td>
+                            <a href="{% url 'match_update' match.pk %}">編集</a>
+                            <a href="{% url 'match_delete' match.pk %}">削除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="5">まだ勝敗データはありません。</td></tr>
+            {% endif %}
+        </table>
+        <p><a href="{% url 'match_create' %}" class="button">新しい勝敗を登録する</a><br>
+        <a href="{% url 'home' %}" class="button">ホームに戻る</a></p>
+    </div>
 </body>
 </html>

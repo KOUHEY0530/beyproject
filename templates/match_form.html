@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -8,26 +9,27 @@
     
     <meta charset="UTF-8">
     <title>勝敗登録</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
 </head>
 <body>
-    <h1>勝敗登録</h1>
-
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">登録</button>
-</form>
-
-    <p><a href="{% url 'home' %}">ホームに戻る</a></p>
+    <div class="container">
+        <h1>勝敗登録</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">登録</button>
+        </form>
+        <p><a href="{% url 'home' %}" class="button">ホームに戻る</a></p>
+    </div>
 </body>
 </html>
 
 <script>
-    $(function() {
-        $("#datepicker").datepicker({
-            dateFormat: 'yy-mm-dd',
-            showOtherMonths: true,
-            selectOtherMonths: true
-        });
+$(function() {
+    $("#datepicker").datepicker({
+        dateFormat: 'yy-mm-dd',
+        showOtherMonths: true,
+        selectOtherMonths: true
     });
+});
 </script>

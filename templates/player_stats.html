@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>プレイヤー勝率一覧</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>プレイヤー勝率一覧</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>プレイヤー名</th>
+                    <th>総試合数</th>
+                    <th>勝利数</th>
+                    <th>勝率 (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stat in stats %}
+                    <tr>
+                        <td>{{ stat.player.name }}</td>
+                        <td>{{ stat.total_matches }}</td>
+                        <td>{{ stat.wins }}</td>
+                        <td>{{ stat.win_rate }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">まだプレイヤーの統計データはありません。</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p><a href="{% url 'home' %}" class="button">ホームに戻る</a></p>
+    </div>
+</body>
+</html>
