@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ベイブレード削除確認</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>ベイブレード削除確認</h1>
+    <p>「{{ beyblade.name }}」を本当に削除しますか？</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="button">削除する</button>
+        <a href="{% url 'player_list' %}" class="button">キャンセル</a>
+    </form>
+</div>
+</body>
+</html>

@@ -1,5 +1,5 @@
-{% load static %}
-<!DOCTYPE html>
+{% load static %} 
+<!DOCTYPE html> 
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -11,17 +11,25 @@
     <h1>{{ title }}</h1>
 
     <form method="post">
-        {% csrf_token %}
-        {{ player_form.as_p }}
-        {{ formset.management_form }}
-        {% for form in formset %}
-          {{ form.as_p }}
-        {% endfor %}
-        <button type="submit">保存</button>
-      </form>
+    {% csrf_token %}
+    
+    <!-- プレイヤーフォームの表示 -->
+    {{ player_form.as_p }}
 
-    <p><a href="{% url 'player_list' %}" class="button">一覧に戻る</a><br>
-    <a href="{% url 'home' %}" class="button">ホームに戻る</a></p>
+    <!-- formsetの管理フォーム (絶対必要) -->
+    {{ formset.management_form }}
+
+    <!-- ベイブレードフォームの表示 -->
+    {% for form in formset %}
+        {{ form.as_p }}
+    {% endfor %}
+
+    <!-- 保存ボタン -->
+    <button type="submit" class="button">保存</button><br>
+
+    <!-- 戻るリンク -->
+    <a href="{% url 'player_list' %}" class="button">一覧に戻る</a>
+    </form>
   </div>
 </body>
 </html>

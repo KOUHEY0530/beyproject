@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>プレイヤー削除確認</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: grid;
+            min-height: 100vh;
+            color: #228B22;
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+            place-items: center; /* 中央寄せ */
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #228B22;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .buttons {
+            text-align: center;
+        }
+
+        .button, button {
+            display: inline-block;
+            padding: 10px 24px;
+            margin: 0 10px;
+            border: 2px solid #228B22;
+            border-radius: 30px;
+            background-color: transparent;
+            color: #228B22;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .button:hover, button:hover {
+            background-color: #228B22;
+            color: #111;
+        }
+
+        /* 削除ボタンは赤強調 */
+        .danger {
+            border-color: #d9534f;
+            color: #d9534f;
+        }
+
+        .danger:hover {
+            background-color: #d9534f;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>プレイヤー削除確認</h1>
+        <p>本当に <strong>{{ player.name }}</strong> さんの情報を削除しますか？<br>この操作は取り消せません。</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="buttons">
+                <button type="submit" class="danger">削除する</button>
+                <a href="{% url 'player_list' %}" class="button">キャンセル</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -3,16 +3,22 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>プレイヤー登録</title>
+    <title>{{ title|default:"プレイヤー登録" }}</title>
     <link rel="stylesheet" href="{% static 'style/style.css' %}">
 </head>
 <body>
     <div class="container">
-        <h1>プレイヤー登録</h1>
+        <h1>{{ title|default:"プレイヤー登録" }}</h1>
 
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+
+            <label for="{{ form.name.id_for_label }}">名前</label>
+            {{ form.name }}
+
+            <label for="{{ form.beyblade_name.id_for_label }}">ベイブレード名</label>
+            {{ form.beyblade_name }}
+
             <button type="submit" class="button">登録する</button>
         </form>
 

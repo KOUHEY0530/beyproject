@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <h2>{{ title }}</h2>
+        <form method="POST">
+            {% csrf_token %}
+                <label for="{{ player_form.name.id_for_label }}">プレイヤー名</label>
+                {{ player_form.name }}
+                    {% if player_form.name.errors %}
+                        <div class="error-message">
+                            {% for error in player_form.name.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                    {% endif %}
+
+            <!-- ベイブレードフォームセットを1回だけ表示 -->
+                    {% for form in formset %}
+                        <label for="{{ form.name.id_for_label }}">ベイブレード名</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                {% for error in form.name.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                    {% endfor %}
+                <input type="submit" value="保存">
+                <a href="{% url 'home' %}">ホームに戻る</a>
+        </form>
+    </div>
+
+</body>
+</html>

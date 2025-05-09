@@ -1,16 +1,20 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
-from .models import Player, Beyblade
-from .models import Match
 from django.forms.models import inlineformset_factory
-from django import forms
 
+from .models import User, Player, Beyblade, Match
+
+# -------------------------
+# ユーザー登録フォーム
+# -------------------------
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
+# -------------------------
+# プレイヤーフォーム
+# -------------------------
 class PlayerForm(forms.ModelForm):
     class Meta:
         model = Player
@@ -19,25 +23,48 @@ class PlayerForm(forms.ModelForm):
             'name': 'プレイヤー名',
         }
 
+# -------------------------
+# ベイブレード (Beyblade) 関連
+# -------------------------
+
+# 1. ベイブレード単体フォーム
 class BeybladeForm(forms.ModelForm):
     class Meta:
         model = Beyblade
-        fields = ['name', 'type']
+        fields = ['name']
         labels = {
             'name': 'ベイブレード名',
         }
 
-    # BeybladeFormSet を作成 (Playerに紐づくBeyblade用)
-BeybladeFormSet = inlineformset_factory(
-    Player,           # 親モデル
-    Beyblade,         # 子モデル
-    form=BeybladeForm, 
+# 2. プレイヤーに紐づくベイブレードFormSet (form=BeybladeForm 追加済み)
+
+# 登録画面用 (extra=1 → 空欄フォーム1個)
+BeybladeFormSetCreate = inlineformset_factory(
+    Player,
+    Beyblade,
+    form=BeybladeForm,   # ← ラベル日本語化のため追加
     fields=['name'],
-    extra=1,          # 新規追加フォームをいくつ表示するか
-    labels={'name': 'ベイブレード名'},
-    can_delete=False
+    extra=1,
+    can_delete=False,
+    validate_min=False,
+    validate_max=False
 )
 
+# 編集画面用 (extra=0 → 既存データ分だけフォーム表示)
+BeybladeFormSetUpdate = inlineformset_factory(
+    Player,
+    Beyblade,
+    form=BeybladeForm,   # ← ラベル日本語化のため追加
+    fields=['name'],
+    extra=0,
+    can_delete=False,
+    validate_min=False,
+    validate_max=False
+)
+
+# -------------------------
+# 試合 (Match) フォーム
+# -------------------------
 class MatchForm(forms.ModelForm):
     class Meta:
         model = Match
@@ -50,7 +77,3 @@ class MatchForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'id': 'datepicker'}),
         label='日付'
     )
-
-class PlayerBeybladeForm(forms.Form):
-    player_name = forms.CharField(label='プレイヤー名', max_length=100)
-    beyblade_name = forms.CharField(label='ベイブレード名', max_length=100)

@@ -4,9 +4,8 @@ from .models import Beyblade
 
 @admin.register(Beyblade)
 class BeybladeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type', 'image_tag', 'created_at', 'updated_at')  # ←image_tagを追加
-    search_fields = ('name', 'type')
-    list_filter = ('type',)
+    list_display = ('name', 'image_tag', 'created_at', 'updated_at')  # ←image_tagを追加
+    search_fields = ('name',)
     ordering = ('name',)
 
     # 画像を管理画面一覧でサムネイル表示する

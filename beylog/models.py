@@ -23,9 +23,8 @@ class Player(models.Model):
         return self.name
     
 class Beyblade(models.Model):
-    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='beyblades')
+    player = models.ForeignKey(Player, related_name='beyblades', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    type = models.CharField(max_length=50) 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

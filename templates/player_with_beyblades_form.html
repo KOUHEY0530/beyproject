@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>プレイヤー・ベイブレード編集</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>「{{ player.name }}」を編集</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <h2>プレイヤー情報</h2>
+        {{ form.as_p }}
+
+        <h2>ベイブレード一覧</h2>
+        {{ formset.management_form }}
+        {% for form in formset %}
+            <div style="border:1px solid #ccff33; padding:10px; margin-bottom:10px;">
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="button">保存する</button>
+    </form>
+
+    <a href="{% url 'player_list' %}" class="button">戻る</a>
+</div>
+</body>
+</html>
