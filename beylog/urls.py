@@ -13,19 +13,17 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
 
     # -------------------- プレイヤー管理 --------------------
-    path('player/list/', views.player_list, name='player_list'),
-    path('player/stats/', views.player_stats, name='player_stats'),
-    path('player/update/<int:pk>/', views.player_update, name='player_update'),
-    path('player/delete/<int:pk>/', views.PlayerDeleteView.as_view(), name='player_delete'),
+    path('player/list/', views.player_list, name='player_list'), # 残す
+    path('player/stats/', views.player_stats, name='player_stats'), # 残す
+    path('player/update/<int:pk>/', views.player_update, name='player_update'), # 残す
+    path('player/delete/<int:pk>/', views.PlayerDeleteView.as_view(), name='player_delete'), #残す
 
     # -------------------- プレイヤー・ベイブレード管理 --------------------
-    path('player_beyblade/create/', views.player_beyblade_create, name='player_beyblade_create'),
-    path('player_beyblade/<int:pk>/update/', views.player_beyblade_update, name='player_beyblade_update'),
-    path('player_beyblade/<int:pk>/delete/', views.player_beyblade_delete, name='player_beyblade_delete'),
+    path('player_beyblade/create/', views.player_beyblade_create, name='player_beyblade_create'), # 残す
 
     # -------------------- 対戦管理 --------------------
-    path('match/create/', views.match_create, name='match_create'),
-    path('match/<int:pk>/edit/', views.match_update, name='match_update'),
-    path('match/<int:pk>/delete/', views.match_delete, name='match_delete'),
-    path('match/list/', views.match_list, name='match_list'),
+    path('match/create/', views.match_create, name='match_create'), # 残す
+    path('match/<int:pk>/edit/', views.match_update, name='match_update'), #　残す
+    path('match/<int:pk>/delete/', views.match_delete, name='match_delete'), #　残す
+    path('match/list/', views.match_list, name='match_list'), # 残す
 ]

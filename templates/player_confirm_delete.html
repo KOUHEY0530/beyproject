@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 残す -->
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -46,7 +47,7 @@
             text-align: center;
         }
 
-        .button, button {
+        .button, button, .danger {
             display: inline-block;
             padding: 10px 24px;
             margin: 0 10px;
@@ -59,23 +60,15 @@
             text-align: center;
             transition: all 0.3s;
             cursor: pointer;
+            width: 180px; /* ボタンの幅を180pxに設定 */
+            box-sizing: border-box; /* padding込みでも幅は180pxに固定 */
         }
 
-        .button:hover, button:hover {
+        .button:hover, button:hover, .danger:hover {
             background-color: #228B22;
             color: #111;
         }
 
-        /* 削除ボタンは赤強調 */
-        .danger {
-            border-color: #d9534f;
-            color: #d9534f;
-        }
-
-        .danger:hover {
-            background-color: #d9534f;
-            color: #fff;
-        }
     </style>
 </head>
 <body>

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic.edit import DeleteView, UpdateView
+from django.views.generic.edit import DeleteView
 from django.db.models import Q
 
 from .forms import CustomUserCreationForm, PlayerForm, BeybladeFormSetCreate, BeybladeFormSetUpdate
@@ -44,18 +44,27 @@ def player_update(request, pk):
 
     if request.method == 'POST':
         player_form = PlayerForm(request.POST, instance=player)
-        formset = BeybladeFormSetCreate(request.POST, instance=player)
+        formset = BeybladeFormSetUpdate(request.POST, instance=player)
 
         if player_form.is_valid() and formset.is_valid():
             player = player_form.save()
 
             formset.instance = player
             instances = formset.save(commit=False)
+
+            # 新規 or 変更の保存
             for instance in instances:
                 instance.player = player
                 instance.save()
 
+            # 削除対象の削除と残りの保存
+            formset.save()
+
             return redirect('player_list')
+        else:
+            print("player_form errors:", player_form.errors)
+            print("formset errors:", formset.errors)
+
     else:
         player_form = PlayerForm(instance=player)
         formset = BeybladeFormSetUpdate(instance=player)
@@ -167,6 +176,11 @@ def player_beyblade_delete(request, pk):
 
     return render(request, 'beyblade_confirm_delete.html', {'beyblade': beyblade})
 
+@login_required
+def match_list(request):
+    matches = Match.objects.all().order_by('-date')
+    return render(request, 'match_list.html', {'matches': matches})
+
 def match_create(request):
     if request.method == 'POST':
         form = MatchForm(request.POST)
@@ -179,33 +193,27 @@ def match_create(request):
     return render(request, 'match_form.html', {'form': form})
 
 def match_update(request, pk):
-    match = get_object_or_404(Match, pk=pk, user=request.user)
+    match = get_object_or_404(Match, pk=pk)
+
+    # 自分のプレイヤーが関わっていない試合は編集不可
+    if match.player1.user != request.user and match.player2.user != request.user:
+        return redirect('match_list')
 
     if request.method == 'POST':
         form = MatchForm(request.POST, instance=match)
         if form.is_valid():
             form.save()
-            return redirect('match_list')  # 試合更新後は試合一覧にリダイレクト
+            return redirect('match_list')
     else:
         form = MatchForm(instance=match)
 
     return render(request, 'match_form.html', {'form': form})
 
 def match_delete(request, pk):
-    match = get_object_or_404(Match, pk=pk, user=request.user)
+    match = get_object_or_404(Match, pk=pk)
 
     if request.method == 'POST':
-        match.delete()  # 試合を削除
-        return redirect('match_list')  # 削除後に試合一覧にリダイレクト
+        match.delete()
+        return redirect('match_list')
 
     return render(request, 'match_confirm_delete.html', {'match': match})
-
-def match_list(request):
-    matches = Match.objects.all().order_by('-date')  # 試合を日付の降順で取得
-    return render(request, 'match_list.html', {'matches': matches})
-
-class PlayerUpdateView(UpdateView):
-    model = Player
-    fields = ['name']
-    template_name = 'player_update.html'
-    success_url = reverse_lazy('player_list')

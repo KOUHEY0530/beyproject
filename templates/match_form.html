@@ -6,10 +6,16 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-datepicker/1.13.0/i18n/datepicker-ja.min.js"></script>
-    
+
     <meta charset="UTF-8">
     <title>勝敗登録</title>
     <link rel="stylesheet" href="{% static 'style/style.css' %}">
+    <style>
+      /* disabledな<option>を緑にする */
+      select option:disabled {
+          color: #228B22;
+      }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -17,19 +23,92 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">登録</button>
+            <button type="submit">登録</button><br>
+            <a href="{% url 'home' %}" class="button">ホームに戻る</a>
         </form>
-        <p><a href="{% url 'home' %}" class="button">ホームに戻る</a></p>
+        
     </div>
+
+    <script>
+    $(function() {
+        // 日付picker適用
+        $('input[type="date"], input[name$="date"]').datepicker({
+            dateFormat: 'yy-mm-dd',
+            showOtherMonths: true,
+            selectOtherMonths: true
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const player1Select = document.getElementById('id_player1');
+        const player2Select = document.getElementById('id_player2');
+        const winnerSelect = document.getElementById('id_winner');
+
+        function updateWinnerOptions() {
+            const player1Value = player1Select.value;
+            const player2Value = player2Select.value;
+
+            winnerSelect.innerHTML = '';
+
+            const selectedPlayers = [];
+            if (player1Value) {
+                selectedPlayers.push({value: player1Value, text: player1Select.options[player1Select.selectedIndex].text});
+            }
+            if (player2Value && player2Value !== player1Value) {
+                selectedPlayers.push({value: player2Value, text: player2Select.options[player2Select.selectedIndex].text});
+            }
+
+            selectedPlayers.forEach(function(player) {
+                const option = document.createElement('option');
+                option.value = player.value;
+                option.text = player.text;
+                winnerSelect.appendChild(option);
+            });
+        }
+
+        function updatePlayerOptions() {
+            const player1Value = player1Select.value;
+            const player2Value = player2Select.value;
+
+            // 全enable
+            for (let option of player1Select.options) {
+                option.disabled = false;
+            }
+            for (let option of player2Select.options) {
+                option.disabled = false;
+            }
+
+            // 重複防止
+            if (player1Value) {
+                for (let option of player2Select.options) {
+                    if (option.value === player1Value && option.value !== "") {
+                        option.disabled = true;
+                    }
+                }
+            }
+            if (player2Value) {
+                for (let option of player1Select.options) {
+                    if (option.value === player2Value && option.value !== "") {
+                        option.disabled = true;
+                    }
+                }
+            }
+        }
+
+        // 初期化
+        updateWinnerOptions();
+        updatePlayerOptions();
+
+        // イベント登録
+        player1Select.addEventListener('change', function() {
+            updateWinnerOptions();
+            updatePlayerOptions();
+        });
+        player2Select.addEventListener('change', function() {
+            updateWinnerOptions();
+            updatePlayerOptions();
+        });
+    });
+    </script>
 </body>
 </html>
-
-<script>
-$(function() {
-    $("#datepicker").datepicker({
-        dateFormat: 'yy-mm-dd',
-        showOtherMonths: true,
-        selectOtherMonths: true
-    });
-});
-</script>

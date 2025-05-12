@@ -1,4 +1,5 @@
 {% load static %}
+<!-- 残す -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -11,10 +12,15 @@
         <h1>ホーム画面</h1>
         <p>{{ user.username }} さん、こんにちは！</p>
 
+        <!-- 上3つ -->
         <ul>
             <li><a href="{% url 'player_beyblade_create' %}" class="button">プレイヤー・ベイブレード登録</a></li>
             <li><a href="{% url 'player_list' %}" class="button">プレイヤー・ベイブレード一覧</a></li>
             <li><a href="{% url 'match_create' %}" class="button">勝敗を登録</a></li>
+        </ul>
+
+        <!-- 下2つ -->
+        <ul>
             <li><a href="{% url 'match_list' %}" class="button">勝敗一覧</a></li>
             <li><a href="{% url 'player_stats' %}" class="button">プレイヤー勝率一覧</a></li>   
         </ul>

@@ -5,41 +5,21 @@ html, body {
 }
 
 body {
-    display: grid;
-    min-height: 100vh;
     color: #228B22;
+    min-height: 100vh;
     font-family: sans-serif;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    max-height: 100%;
 }
 
-/* メインコンテンツ */
-main {
-    padding: 20px;
-    overflow-y: auto;  /* 内容が多ければスクロール可 */
-}
-
-/* コンテナ (中身の箱) */
+/* メインコンテナ (画面いっぱい) */
 .container {
+    width: 100vw;
+    height: 100vh;
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    width: 100%;
-    height: 100%;
+    padding: 40px;
     box-sizing: border-box;
-}
-
-/* テーブルも広げる */
-table {
-    width: 100%;
-    border: 1px solid #228B22;
-    border-collapse: collapse;
-}
-
-th, td {
-    border: 1px solid #228B22;
-    padding: 10px;
-    text-align: center;
-    font-size: 150%;
 }
 
 /* 見出し */
@@ -49,20 +29,26 @@ h1 {
     margin-bottom: 20px;
 }
 
-ul, ul li {
-    list-style: none;
+/* フォーム */
+form {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto; /* 中身のフォームは中央寄せ */
 }
 
 /* ラベル */
 label {
-    color: #006400;
+    display: block;
+    margin-bottom: 8px;
     font-weight: bold;
+    color: #006400;
 }
 
-/* テキスト入力・パスワード・セレクトボックス */
+/* 入力欄 */
 input[type="text"], input[type="password"], select, input[type="email"] {
+    display: block;
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 2px solid #228B22;
     border-radius: 5px;
     background-color: #ffffff;
@@ -78,12 +64,38 @@ input[type="text"]:focus, input[type="password"]:focus, select:focus, input[type
     box-shadow: 0 0 5px #006400;
 }
 
-/* ボタン・ボタン風リンク */
+/* テーブル */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #228B22;
+}
+
+th, td {
+    border: 1px solid #228B22;
+    padding: 10px;
+    text-align: center;
+    font-size: 150%;
+}
+
+ul, ul li {
+    list-style: none;
+}
+
+ul {
+  display: flex;
+  justify-content: center; /* 中央揃え（お好み） */
+  gap: 10px;               /* ボタン間の余白（お好み） */
+  list-style: none;        /* 「・」を消す */
+  padding-left: 0;         /* 左余白も消す */
+  margin: 10px 0;          /* 上下余白 */
+}
+
+/* ボタン */
 .button, button, input[type="submit"] {
     display: inline-block;
-    padding: 10px 24px;
+    padding: 10px 35px;
     margin: 10px 5px 0 0;
-    margin-left: 20px;
     border: 2px solid #228B22;
     border-radius: 30px;
     background-color: transparent;
@@ -93,6 +105,7 @@ input[type="text"]:focus, input[type="password"]:focus, select:focus, input[type
     text-align: center;
     transition: all 0.3s;
     cursor: pointer;
+    min-width: 180px;
 }
 
 /* ボタンホバー */
