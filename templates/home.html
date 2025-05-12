@@ -22,12 +22,14 @@
         <!-- 下2つ -->
         <ul>
             <li><a href="{% url 'match_list' %}" class="button">勝敗一覧</a></li>
-            <li><a href="{% url 'player_stats' %}" class="button">プレイヤー勝率一覧</a></li>   
+            <li><a href="{% url 'player_stats' %}" class="button">プレイヤー勝率一覧</a></li>
+            <li><form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+            <button type="submit" class="button">ログアウト</button>
+            </li>   
         </ul>
 
-        <form action="{% url 'logout' %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit">ログアウト</button>
+        
         </form>
     </div>
 </body>
