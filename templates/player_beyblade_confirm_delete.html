@@ -1,9 +1,0 @@
-<h1>ベイブレード削除確認</h1>
-
-<p>本当にこのベイブレードを削除しますか？</p>
-
-<form method="POST">
-    {% csrf_token %}
-    <input type="submit" value="削除">
-    <a href="{% url 'player_list' %}">キャンセル</a>
-</form>

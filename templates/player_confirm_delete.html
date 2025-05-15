@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- 残す -->
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -48,7 +47,9 @@
         }
 
         .button, button, .danger {
-            display: inline-block;
+            display: inline-flex; /* inline-block から inline-flexに変更 */
+            align-items: center;  /* 垂直中央揃え */
+            justify-content: center; /* 横中央揃え */
             padding: 10px 24px;
             margin: 0 10px;
             border: 2px solid #228B22;
@@ -57,12 +58,15 @@
             color: #228B22;
             text-decoration: none;
             font-weight: bold;
-            text-align: center;
-            transition: all 0.3s;
             cursor: pointer;
-            width: 180px; /* ボタンの幅を180pxに設定 */
-            box-sizing: border-box; /* padding込みでも幅は180pxに固定 */
-        }
+            width: 180px;
+            box-sizing: border-box;
+            font-size: 1em;
+            line-height: 1.2;
+            vertical-align: middle;
+            height: 48px; /* 明示的に高さを固定 */
+            user-select: none; /* 選択防止（任意） */
+}
 
         .button:hover, button:hover, .danger:hover {
             background-color: #228B22;
@@ -76,7 +80,6 @@
     <div class="container">
         <h1>プレイヤー削除確認</h1>
         <p>本当に <strong>{{ player.name }}</strong> さんの情報を削除しますか？<br>この操作は取り消せません。</p>
-
         <form method="post">
             {% csrf_token %}
             <div class="buttons">

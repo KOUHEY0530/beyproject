@@ -2,24 +2,22 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    background-color: #f9f9f9;
 }
 
 body {
     color: #228B22;
-    min-height: 100vh;
     font-family: sans-serif;
-    background-color: #f9f9f9;
-    max-width: 800px;
     max-height: 100%;
 }
 
-/* メインコンテナ (画面いっぱい) */
+/* メインコンテナ */
 .container {
-    width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background: white;
     padding: 40px;
     box-sizing: border-box;
+    box-shadow: none !important;
 }
 
 /* 見出し */
@@ -33,7 +31,7 @@ h1 {
 form {
     width: 100%;
     max-width: 800px;
-    margin: 0 auto; /* 中身のフォームは中央寄せ */
+    margin: 0 auto;
 }
 
 /* ラベル */
@@ -78,21 +76,35 @@ th, td {
     font-size: 150%;
 }
 
+/* ボタンリストとボタンの整形 */
 ul, ul li {
     list-style: none;
 }
 
 ul {
-  display: flex;
-  justify-content: center; /* 中央揃え（お好み） */
-  gap: 10px;               /* ボタン間の余白（お好み） */
-  list-style: none;        /* 「・」を消す */
-  padding-left: 0;         /* 左余白も消す */
-  margin: 10px 0;          /* 上下余白 */
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-left: 0;
+    margin: 10px 0;
 }
 
-/* ボタン */
-.button, button, input[type="submit"] {
+.button-list {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-left: 0;
+    margin: 10px 0;
+}
+
+.button-list li {
+    list-style: none;
+}
+
+/* ボタン共通スタイル（リンク、submit、button） */
+.button,
+button.button,
+input[type="submit"] {
     display: inline-block;
     padding: 10px 35px;
     margin: 10px 5px 0 0;
@@ -106,10 +118,17 @@ ul {
     transition: all 0.3s;
     cursor: pointer;
     min-width: 180px;
+    height: 60px;
+    line-height: 40px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-size: 1rem;
 }
 
 /* ボタンホバー */
-.button:hover, button:hover, input[type="submit"]:hover {
+.button:hover,
+button.button:hover,
+input[type="submit"]:hover {
     background-color: #228B22;
     color: #111;
 }
@@ -120,4 +139,19 @@ button:disabled, input[type="submit"]:disabled {
     border-color: #666;
     color: #333;
     cursor: not-allowed;
+}
+
+/* ボタンリストの中央寄せ */
+ul.center,
+.button-list.center {
+    display: flex;
+    justify-content: center;  /* ←中央揃え */
+    gap: 10px;
+    padding-left: 0;
+    margin: 10px 0;
+}
+
+.greeting {
+    text-align: center;
+    margin-bottom: 30px;
 }

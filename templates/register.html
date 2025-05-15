@@ -16,10 +16,9 @@
             {% csrf_token %}
             {{ form.as_p }}
 
-            <button type="submit">登録する</button>
+            <button type="submit" class="button">登録する</button><br>
+            <a href="{% url 'login' %}" class="button">すでにアカウントをお持ちの方はこちら</a>
         </form>
-
-        <p><a href="{% url 'login' %}" class="button">すでにアカウントをお持ちの方はこちら</a></p>
     </div>
 </body>
 </html>
