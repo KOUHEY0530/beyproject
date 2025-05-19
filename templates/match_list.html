@@ -27,8 +27,8 @@
                         <td>{{ match.winner.name }}</td>
                         <td>{{ match.date }}</td>
                         <td>
-                            <a href="{% url 'match_update' match.pk %}">編集</a>
-                            <a href="{% url 'match_delete' match.pk %}">削除</a>
+                            <a href="{% url 'match_update' match.pk %}" class="button">編集</a>
+                            <a href="{% url 'match_delete' match.pk %}" class="button logout-button">削除</a>
                         </td>
                     </tr>
                 {% endfor %}

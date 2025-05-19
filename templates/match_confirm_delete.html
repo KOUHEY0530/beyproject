@@ -5,18 +5,42 @@
     <meta charset="UTF-8">
     <title>勝敗削除確認</title>
     <link rel="stylesheet" href="{% static 'style/style.css' %}">
+    <style>
+        .button-wrapper {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button-wrapper button,
+        .button-wrapper a.button {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        /* 削除ボタンの赤色設定（念のため） */
+        .danger {
+            border-color: red;
+            color: red;
+        }
+
+        .danger:hover {
+            background-color: red;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>勝敗削除確認</h1>
-        <p>この勝敗データを本当に削除しますか？</p>
-
-        <p>{{ match.player1.name }} vs {{ match.player2.name }} — 勝者: {{ match.winner.name }} ({{ match.date }})</p>
+        <p class="greeting">この勝敗データを本当に削除しますか？</p>
+        <p class="greeting">{{ match.player1.name }} vs {{ match.player2.name }} — 勝者: {{ match.winner.name }} ({{ match.date }})</p>
 
         <form method="post">
             {% csrf_token %}
-            <button type="submit">削除する</button>
-            <a href="{% url 'match_list' %}" class="button">キャンセル</a>
+            <div class="button-wrapper">
+                <button type="submit" class="danger">削除する</button>
+                <a href="{% url 'match_list' %}" class="button">キャンセル</a>
+            </div>
         </form>
     </div>
 </body>
