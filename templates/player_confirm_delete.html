@@ -16,7 +16,7 @@
             color: #228B22;
             font-family: sans-serif;
             background-color: #f9f9f9;
-            place-items: center; /* 中央寄せ */
+            place-items: center;
         }
 
         .container {
@@ -46,10 +46,10 @@
             text-align: center;
         }
 
-        .button, button, .danger {
-            display: inline-flex; /* inline-block から inline-flexに変更 */
-            align-items: center;  /* 垂直中央揃え */
-            justify-content: center; /* 横中央揃え */
+        .button, button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding: 10px 24px;
             margin: 0 10px;
             border: 2px solid #228B22;
@@ -62,17 +62,25 @@
             width: 180px;
             box-sizing: border-box;
             font-size: 1em;
-            line-height: 1.2;
-            vertical-align: middle;
-            height: 48px; /* 明示的に高さを固定 */
-            user-select: none; /* 選択防止（任意） */
-}
-
-        .button:hover, button:hover, .danger:hover {
-            background-color: #228B22;
-            color: #111;
+            height: 48px;
+            user-select: none;
         }
 
+        .button:hover, button:hover {
+            background-color: #228B22;
+            color: #fff;
+        }
+
+        /* ✅ 削除ボタンを赤く */
+        .danger {
+            border-color: #c00;
+            color: #c00;
+        }
+
+        .danger:hover {
+            background-color: #c00;
+            color: #fff;
+        }
     </style>
 </head>
 <body>

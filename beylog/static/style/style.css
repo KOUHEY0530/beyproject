@@ -1,14 +1,11 @@
+/* 全体基本設定 */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
-}
-
-body {
     color: #228B22;
     font-family: sans-serif;
-    max-height: 100%;
 }
 
 /* メインコンテナ */
@@ -17,7 +14,6 @@ body {
     background: white;
     padding: 40px;
     box-sizing: border-box;
-    box-shadow: none !important;
 }
 
 /* 見出し */
@@ -43,20 +39,26 @@ label {
 }
 
 /* 入力欄 */
-input[type="text"], input[type="password"], select, input[type="email"] {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
     display: block;
     width: 100%;
     padding: 12px;
+    margin-bottom: 15px;
     border: 2px solid #228B22;
     border-radius: 5px;
-    background-color: #ffffff;
+    background-color: #fff;
     color: #228B22;
-    margin-bottom: 15px;
     box-sizing: border-box;
 }
 
-/* フォーカス時 */
-input[type="text"]:focus, input[type="password"]:focus, select:focus, input[type="email"]:focus {
+/* フォーカス時のハイライト */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+select:focus {
     outline: none;
     border-color: #006400;
     box-shadow: 0 0 5px #006400;
@@ -67,44 +69,18 @@ table {
     border-collapse: collapse;
     width: 100%;
     border: 1px solid #228B22;
+    margin-bottom: 20px;
 }
 
 th, td {
     border: 1px solid #228B22;
     padding: 10px;
     text-align: center;
-    font-size: 150%;
+    font-size: 1.2rem;
 }
 
-/* ボタンリストとボタンの整形 */
-ul, ul li {
-    list-style: none;
-}
-
-ul {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    padding-left: 0;
-    margin: 10px 0;
-}
-
-.button-list {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    padding-left: 0;
-    margin: 10px 0;
-}
-
-.button-list li {
-    list-style: none;
-}
-
-/* ボタン共通スタイル（リンク、submit、button） */
-.button,
-button.button,
-input[type="submit"] {
+/* ボタン：共通クラス */
+.button {
     display: inline-block;
     padding: 10px 35px;
     margin: 10px 5px 0 0;
@@ -121,37 +97,103 @@ input[type="submit"] {
     height: 60px;
     line-height: 40px;
     box-sizing: border-box;
-    font-family: sans-serif;
     font-size: 1rem;
 }
 
-/* ボタンホバー */
-.button:hover,
-button.button:hover,
-input[type="submit"]:hover {
+/* 通常ボタン hover */
+.button:hover {
     background-color: #228B22;
     color: #111;
 }
 
-/* 無効化ボタン */
-button:disabled, input[type="submit"]:disabled {
+/* submitボタンを赤に */
+input[type="submit"],
+button[type="submit"] {
+    border: 2px solid #c00;
+    color: #c00;
+    background-color: transparent;
+    display: inline-block;
+    padding: 10px 35px;
+    margin: 10px 5px 0 0;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+    min-width: 180px;
+    height: 60px;
+    line-height: 40px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+/* submitボタン hover */
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+    background-color: #c00;
+    color: #fff;
+}
+
+/* 無効ボタン */
+.button:disabled,
+button:disabled,
+input[type="submit"]:disabled {
     background-color: #666;
     border-color: #666;
     color: #333;
     cursor: not-allowed;
 }
 
-/* ボタンリストの中央寄せ */
-ul.center,
-.button-list.center {
-    display: flex;
-    justify-content: center;  /* ←中央揃え */
-    gap: 10px;
+/* ボタンリスト（ul）の整形 */
+ul,
+ul li {
+    list-style: none;
     padding-left: 0;
+    margin: 0;
+}
+
+ul {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
     margin: 10px 0;
 }
 
+.button-list {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+/* 中央揃えしたい場合 */
+ul.center,
+.button-list.center {
+    justify-content: center;
+}
+
+/* あいさつ文など中央表示用 */
 .greeting {
     text-align: center;
     margin-bottom: 30px;
+}
+
+/* 空データ時のテーブル用メッセージ */
+.table-message {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-style: italic;
+}
+
+/* ログアウトボタン専用スタイル（赤） */
+.logout-button {
+    border-color: #c00;
+    color: #c00;
+}
+
+.logout-button:hover {
+    background-color: #c00;
+    color: #fff;
 }

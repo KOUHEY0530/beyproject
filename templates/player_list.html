@@ -10,16 +10,16 @@
 <div class="container">
   <h1>プレイヤー・ベイブレード一覧</h1>
 
-  {% if players %}
-    <table>
-      <thead>
-        <tr>
-          <th>プレイヤー名</th>
-          <th>ベイブレード一覧</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
+  <table>
+    <thead>
+      <tr>
+        <th>プレイヤー名</th>
+        <th>ベイブレード一覧</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if players %}
         {% for player in players %}
           <tr>
             <td>{{ player.name }}</td>
@@ -36,16 +36,17 @@
             </td>
             <td>
               <a href="{% url 'player_update' player.pk %}" class="button">編集</a>
-              <a href="{% url 'player_delete' player.pk %}" class="button">削除</a>
+              <a href="{% url 'player_delete' player.pk %}" class="button logout-button">削除</a>
             </td>
           </tr>
         {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p>まだプレイヤーが登録されていません。</p>
-  {% endif %}
-
+      {% else %}
+        <tr>
+          <td colspan="3" style="text-align: center;">まだプレイヤーが登録されていません。</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
   <a href="{% url 'player_beyblade_create' %}" class="button">プレイヤー・ベイブレードを登録する</a><br>
   <a href="{% url 'home' %}" class="button">ホームに戻る</a>
 </div>
